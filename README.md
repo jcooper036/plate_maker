@@ -1,5 +1,5 @@
 # Plate Maker
-v0.1
+v0.1.1
 by Jacob Cooper
 jcooper036@gmail.com
   
@@ -24,9 +24,14 @@ Experiment: Testing the different methods of building CRISPR reagents using a co
     - if have it, a list of plate barcodes
     - Layer names
     - source plates to look in
-    - For each layer
-        - list of reagent names : replicates
-    - layer randomization scheme (rows, columns, wells)
+    - For each layer : layer_name(tag1;tag2;tag3)
+        - tags (can use none-all of these) :
+            - id : [id1,id2,id2] | default == all
+            - vol : int, divisable by 5 | default == vol specified in the source file
+            - source : change the source plate file for this condition | default == specicified source plate
+    - layer randomization scheme (rows, columns)
+        - each condition is present on every plate (that's the point of this whole thing)
+        - ex: if "columns" then each column will have the same condition, the conditions will be distributed amoungst the columns as much as they can (highest whole division of 46), and which column each conidtion is in will be randomized across the plates
 ## Outputs
 - picklist (.csv) + a schema for how to randomize the layers with the EL406
 - list of all the features for each well in long-skinny format.

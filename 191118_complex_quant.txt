@@ -1,0 +1,8 @@
+# setup for the 191118 reagent tritration experiment
+
+replicate_plates:6
+plate_barcodes:[] 
+layer_names:1x,2x,4x,6x,8x,10x
+source_plates:IB-genoCRISPR-stdv1.csv
+layer_reagent_mix:1x(id=all,vol=40),2x(id=all,vol=80),4x(id=all,vol=160),6x(id=all,vol=240),8x(id=all,vol=320),10x(id=all,vol=400)
+randomization_scheme:columns
