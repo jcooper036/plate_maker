@@ -42,7 +42,6 @@ class Ctl(object):
                     for idx, key in enumerate(layer_keys):
                         if key in self.layers:
                             ent = layers[idx].split('(')[1].split(')')[0].split(';')
-                            print(ent)
                             for e in ent:
                                 self.layers[key][e.split('=')[0]] = e.split('=')[1]
 
