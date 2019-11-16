@@ -19,8 +19,12 @@ class Ctl(object):
             for line in f:
                 line = line.rstrip()
                 
-                if 'replicate_plates' in line:
-                    self.replicate_plates = int(line.split(':')[1])
+                if 'replicates:' in line:
+                    self.replicates = int(line.split(':')[1])
+                
+                if 'plates_per_replicate:' in line:
+                    self.platesper = 1 # fix in future versions
+                    # self.platesper = int(line.split(':')[1])
                 
                 if 'plate_barcodes' in line:
                     self.plate_barcodes = line.split(':')[1].split(',')
@@ -47,5 +51,9 @@ class Ctl(object):
 
                 if 'randomization_scheme' in line:
                     self.randomization_scheme = line.split(':')[1]
+        
+        for layer in self.layers:
+            if self.layers[layer]['source'] == 'default':
+                self.layers[layer]['source'] = self.source_plates[0]
                             
 

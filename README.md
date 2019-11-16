@@ -1,5 +1,5 @@
 # Plate Maker
-v0.1.1
+v0.1.3
 by Jacob Cooper
 jcooper036@gmail.com
   
@@ -20,7 +20,8 @@ Experiment: Testing the different methods of building CRISPR reagents using a co
     - Reagent ID
     - REC ID
 ### Experiment setup file
-    - replicate plates
+    - plates per replicate ## WARNING - Can only be 1 for right now
+    - replicates
     - if have it, a list of plate barcodes
     - Layer names
     - source plates to look in
