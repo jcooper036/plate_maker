@@ -1,5 +1,5 @@
 # Plate Maker
-v1.0.0
+v1.0.1
 by Jacob Cooper
 jcooper036@gmail.com
   
