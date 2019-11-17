@@ -1,5 +1,5 @@
 # Plate Maker
-v0.1.3
+v1.0.0
 by Jacob Cooper
 jcooper036@gmail.com
   
@@ -12,6 +12,15 @@ Experiment: Testing the different methods of building CRISPR reagents using a co
 - Then the Echo has to dispense specific types of reagents to each of those columns, but randomly scatter them on each plate.
 - In short, Experimental Delight is not good at this.
 ## Inputs
+
+### Setup
+Make an experimetn setup .ctl file. Path to that should be that in `experiments/exper_name/exper_name.ctl`.  
+  
+Call `ex = plm.Experiment(exper_name)`  
+`ex.load_data(f'experiments/{exper_name}/{exper_name}.ctl')`  
+  
+Main workflow can be found in the `workflow.py` script.
+
 ### Source plate files
     - Source (source plate name)
     - Source Plate Barcode

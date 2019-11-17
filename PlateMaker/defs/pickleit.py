@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 
-import pickle as pkl
+import pickle
 
 def pickle_save(ob, file):
     with open(file, 'wb') as f:

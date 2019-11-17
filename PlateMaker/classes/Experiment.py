@@ -126,17 +126,75 @@ class Experiment(object):
         self.save()
         self.make_picklist()
         self.make_protocol()
+        self.construct_metadata()
     
     def save(self):
-        self.time['last_save'] = datetime.now()
+        self.time['last_save'] = str(datetime.now())
+        print(f'{self.name} saved at {str(datetime.now())}')
+        plm.pickle_save(self, f"experiments/{self.name}/{self.name}.pkl")
 
     def make_picklist(self):
-        pass
+        """
+        All the information from each well needs to be written as a csv picklist
+        """
+        header = ['Source','Source Plate Barcode','Source Well','Destination','Destination Plate Barcode','Destination Well','Transfer Volume','Concentration','Reagent ID','Printing ID','Layer','Updated At','Printed At','REC ID']
+        data = []
+        for plate in self.plates:
+            for well in self.plates[plate].wells:
+                if self.plates[plate].wells[well]['Source']:
+                    ip = []
+                    for im in header:
+                        ip.append(str(self.plates[plate].wells[well][im]))
+                    data.append(ip)
+        file = f'experiments/{self.name}/{self.name}_picklist.csv'
+        write_csv(file, data, header=header)
 
     def make_protocol(self):
-        pass
+        """
+        Write the protocol to use for the EL406 in terms of plates and rows/columns to add each reagent to.
+        """
+        conds = {}
+        for plate in self.div_assign:
+            for cond in self.div_assign[plate]:
+                if cond not in conds:
+                    conds[cond] = {}
+                if plate not in conds[cond]:
+                    conds[cond][plate] = []
+                for ent in self.div_assign[plate][cond]:
+                    conds[cond][plate].append(ent)
+        
+        data = f'## Protocol for {self.name}\n\n'
+        for cond in conds:
+            data += str(cond) + '\n'
+            for plate in conds[cond]:
+                data += f'\t{plate}\n'
+                data += '\t\t' + ','.join(conds[cond][plate]) + '\n'
 
+        file = f'experiments/{self.name}/{self.name}_protocol.txt'
+        with open(file, 'w') as f:
+            f.write(data)
+    
+    def construct_metadata(self):
+        """
+        export a metadata csv that can be converted into something for drug discovery easily
+        """
+        pass
 
 base_rows = ['B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE']
 
 base_cols = ['02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47']
+
+def write_csv(file, data, header=False):
+    """
+    Input:
+        file - string, file path
+        data - list of lists of strings
+        header - list of strings
+    """
+    with open(file, 'w') as f:
+        if header:
+            f.write(','.join(header))
+            f.write('\n')
+        for ent in data:
+            f.write(','.join(ent))
+            f.write('\n')
